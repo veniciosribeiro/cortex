@@ -1,0 +1,40 @@
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:info}
+    web: ${LOG_LEVEL_WEB:info}
+    org:
+      springframework:
+        web: ${LOG_LEVEL_SPRING:info}
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:cortex
+    driverClassName: org.h2.Driver
+    username: cortex
+    password: cortex
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    config:
+      exchange: cortex
+      routing-key: cortex.currency
+
+api:
+  bc:
+    url: "${API_BC_URL:https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)}"
+    conexao:
+      timeout: ${API_BC_CONEXAO_TIMEOUT:0}
+  cache:
+    timeout: ${API_BC_CACHE_TIMEOUT:1}

@@ -1,0 +1,26 @@
+version: '3'
+services:
+  cortex-currence-conversion:
+    image: mvrdutra/cortex-currence-conversion:latest
+    container_name: cortex-currence-conversion
+    restart: unless-stopped
+    environment:
+      - DATABASE_POSTGRES_URL=${DATABASE_POSTGRES_URL}
+      - DATABASE_POSTGRES_USER=${DATABASE_POSTGRES_USER}
+      - DATABASE_POSTGRES_PASS=${DATABASE_POSTGRES_PASS}
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_VHOST=${RABBIT_VHOST}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PASS=${RABBIT_PASS}
+      - RABBIT_EXC=${RABBIT_EXC}
+      - RABBIT_RTK=${RABBIT_RTK}
+      - LOG_LEVEL_ROOT=${LOG_LEVEL_ROOT}
+      - LOG_LEVEL_WEB=${LOG_LEVEL_WEB}
+      - LOG_LEVEL_SPRING=${LOG_LEVEL_SPRING}
+      - API_BC_CONEXAO_TIMEOUT=${API_BC_CONEXAO_TIMEOUT}
+      - API_BC_CACHE_TIMEOUT=${API_BC_CACHE_TIMEOUT}
+      - TZ=${TZ}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - PORT=${PORT}
+    ports:
+      - "${PORT}:${PORT}"

@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: jdbc:${DATABASE_POSTGRES_URL}
+    username: ${DATABASE_POSTGRES_USER}
+    password: ${DATABASE_POSTGRES_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:none}
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  rabbitmq:
+    port: 5672
+    host: ${RABBIT_HOST}
+    virtual-host: ${RABBIT_VHOST}
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASS}
+    config:
+      exchange: ${RABBIT_EXC:cortex}
+      routing-key: ${RABBIT_RTK:cortex.currency}
