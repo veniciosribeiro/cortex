@@ -95,16 +95,16 @@ $ docker stop cortex-currency-conversion
 
 ## 
 #### Diagrama Producer:
-![Diagrama Producer](https://raw.githubusercontent.com/veniciosribeiro/cortex/master/documentacao/Rabbit-Consumer.png "Diagrama de Aplicação e Fluxo do Producer")
+![Diagrama Producer](https://raw.githubusercontent.com/veniciosribeiro/cortex/master/documentacao/Rabbit-Producer.png "Diagrama de Aplicação e Fluxo do Producer")
 
 ##### Diagrama Consumer
-![Diagrama Consumer](https://raw.githubusercontent.com/veniciosribeiro/cortex/master/documentacao/Rabbit-Producer.png "Diagrama de Aplicação e Fluxo do Consumer")
+![Diagrama Consumer](https://raw.githubusercontent.com/veniciosribeiro/cortex/master/documentacao/Rabbit-Consumer.png "Diagrama de Aplicação e Fluxo do Consumer")
 
 #### Assertividade
 ##### Priorização
-Devido a alguns contra-tempos não foi possível implementar a priorização de consumo da fila, porém haviam duas opções: 
+Devido a alguns contratempos não foi possível implementar a priorização de consumo da fila, porém haviam duas opções: 
 - Criar um `schedule` consumindo as entradas do banco de dados ordenando por prioridade e data de solicitação. Em seguida enviar para a fila e aguardar a conversão.
-- Utilizar a `Priority Queue` do RabbitMQ com `x-max-priority` para gerir o enfileiramento e envio para os consumeres.
+- Utilizar a `Priority Queue` do RabbitMQ com `x-max-priority` para gerir o enfileiramento e envio para os consumers.
 
 ##### Separação em mais serviços
 Tive alguns problemas pessoais de saúde durante a execução do desafio que me fez ter menos tempo para separar melhor o escopo da aplicação.
