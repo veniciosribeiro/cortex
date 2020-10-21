@@ -93,6 +93,11 @@ $ docker stop cortex-currency-conversion
 * Iene (JPY) Tipo A
 * Libra esterlina (GBP) Tipo B
 
+#### Swagger
+O Swagger pode ser acessado no endereço abaixo ou acessando o caminho `/swagger-ui.html` em outro ambiente configurado.
+
+- https://cortex-backend-conversion-api.herokuapp.com/swagger-ui.html
+
 ## 
 #### Diagrama Producer:
 ![Diagrama Producer](https://raw.githubusercontent.com/veniciosribeiro/cortex/master/documentacao/Rabbit-Producer.png "Diagrama de Aplicação e Fluxo do Producer")
@@ -114,18 +119,6 @@ O ideal seria:
 - Aplicação 2: Carrega os itens do banco por priorização e data e envia para a fila.
 - Aplicação 3: Consome a fila e realiza a conversão.
 - Aplicações extras: Coletor de logs, desempenho e talvez um Gateway.
-
-#### Swagger
-Alguma incopatibilidade está impedindo o Swagger de ser configurado corretamente. Embora as dependências e configurações necessárias tenham sido realizadas, o endpoint não está funcionando.
-
-Ao acessar a aplicação pode ser observado que os seguintes endpoints retornam com sucesso:
-- https://cortex-backend-conversion-api.herokuapp.com/swagger-resources
-- https://cortex-backend-conversion-api.herokuapp.com/v2/api-docs
-
-Ao acessar o endpoint do Swagger UI, não há resposta:
-- https://cortex-backend-conversion-api.herokuapp.com/swagger-ui
-- https://cortex-backend-conversion-api.herokuapp.com/swagger-ui.html
-- https://cortex-backend-conversion-api.herokuapp.com/swagger-ui/index.html
 
 #### Para refências externas, considere as seguintes explicações do Banco Central:
 
