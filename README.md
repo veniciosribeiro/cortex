@@ -59,7 +59,7 @@ $ docker-compose down
 
 Para baixar a imagem mais recente, execute:
 ```bash
-$ docker pull mvrdutra/cortex-currence-conversion:latest
+$ docker pull mvrdutra/cortex-currency-conversion:latest
 ```
 
 Para iniciar a aplicação, execute o comando abaixo:
@@ -70,13 +70,13 @@ Para iniciar a aplicação, execute o comando abaixo:
 `--env-file` caminho do arquivo `.env` que contém as configurações necessárias.
 
 ```bash
-$ docker run -p 8080:8080 --env-file .env -d --rm --name cortex-currence-conversion mvrdutra/cortex-currence-conversion:latest
+$ docker run -p 8080:8080 --env-file .env -d --rm --name cortex-currency-conversion mvrdutra/cortex-currency-conversion:latest
 ```
 
 Para parar a aplicação, execute o comando abaixo:
 
 ```bash
-$ docker stop cortex-currence-conversion
+$ docker stop cortex-currency-conversion
 ```
 
 ##

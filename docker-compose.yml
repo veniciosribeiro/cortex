@@ -1,8 +1,8 @@
 version: '3'
 services:
-  cortex-currence-conversion:
-    image: mvrdutra/cortex-currence-conversion:latest
-    container_name: cortex-currence-conversion
+  cortex-currency-conversion:
+    image: mvrdutra/cortex-currency-conversion:latest
+    container_name: cortex-currency-conversion
     restart: unless-stopped
     environment:
       - DATABASE_POSTGRES_URL=${DATABASE_POSTGRES_URL}
