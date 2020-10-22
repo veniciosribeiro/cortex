@@ -1,5 +1,7 @@
 # Currency conversion for Cortex Case
 
+TESTE DE CI DO GITHUB
+
 Esta aplicação pode ser acessada no Heroku através do link de exemplo abaixo:
 
 [https://cortex-backend-conversion-api.herokuapp.com/converte/USD/BRL/1/20-10-2020](https://cortex-backend-conversion-api.herokuapp.com/converte/USD/BRL/1/20-10-2020)
