@@ -25,13 +25,13 @@ Dentre outras informações, o aquivo `.env` contém informações de conexão c
 | RABBIT_VHOST | Endereço virtual host do RabbitMQ | 
 | RABBIT_USER | Usuário de conexão com o RabbitMQ | 
 | RABBIT_PASS | Senha do servidor RabbitMQ |
-| RABBIT_EXC | Exchange utilziada pelo RabbitMQ |
-| RABBIT_RTK | Routing key utilziada pelo RabbitMQ |
+| RABBIT_EXC | Exchange utilizada pelo RabbitMQ |
+| RABBIT_RTK | Routing key utilizada pelo RabbitMQ |
 | LOG_LEVEL_ROOT | Root log level do Spring | 
 | LOG_LEVEL_WEB | Log level de requisições WEB | 
 | LOG_LEVEL_SPRING | Log level do Spring | 
 | API_BC_CONEXAO_TIMEOUT | Timeout de conexão com o servidor do banco central |
-| API_BC_CACHE_TIMEOUT | Tempo de vida di cache de resultados em minutos |
+| API_BC_CACHE_TIMEOUT | Tempo de vida do cache de conversões em minutos |
 | TZ | Timezone da aplicação. Ex.:`America/Sao_Paulo` |
 | SPRING_PROFILES_ACTIVE | Profile que será utilizado pela aplicação | 
 | PORT | Server Port que será utilizada |
