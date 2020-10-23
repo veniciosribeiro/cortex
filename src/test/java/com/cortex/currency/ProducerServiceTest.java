@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
-public class ProducerServiceTest {
+public class ProducerServiceTest extends AbstractSpringBootTest {
 
     @InjectMocks
     ProducerServiceImpl producerService;

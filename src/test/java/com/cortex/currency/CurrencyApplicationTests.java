@@ -1,10 +1,8 @@
 package com.cortex.currency;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CurrencyApplicationTests {
+class CurrencyApplicationTests extends AbstractSpringBootTest {
 
     @Test
     void contextLoads() {

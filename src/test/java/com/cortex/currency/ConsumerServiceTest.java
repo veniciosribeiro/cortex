@@ -17,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,11 +24,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@SpringBootTest
 @TestPropertySource(properties = {
         "api.bc.url=null",
 })
-public class ConsumerServiceTest {
+public class ConsumerServiceTest extends AbstractSpringBootTest {
 
     @InjectMocks
     private ConsumerServiceImpl consumerService;

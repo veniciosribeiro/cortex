@@ -13,12 +13,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-@SpringBootTest
-public class QueueServiceTest {
+public class QueueServiceTest extends AbstractSpringBootTest {
 
     @InjectMocks
     private QueueServiceImpl queueService;
