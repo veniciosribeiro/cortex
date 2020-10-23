@@ -29,6 +29,7 @@ Dentre outras informações, o aquivo `.env` contém informações de conexão c
 | LOG_LEVEL_ROOT | Root log level do Spring | 
 | LOG_LEVEL_WEB | Log level de requisições WEB | 
 | LOG_LEVEL_SPRING | Log level do Spring | 
+| API_BC_URL | Url da api de cotações do banco central | 
 | API_BC_CONEXAO_TIMEOUT | Timeout de conexão com o servidor do banco central |
 | API_BC_CACHE_TIMEOUT | Tempo de vida do cache de conversões em minutos |
 | TZ | Timezone da aplicação. Ex.:`America/Sao_Paulo` |
