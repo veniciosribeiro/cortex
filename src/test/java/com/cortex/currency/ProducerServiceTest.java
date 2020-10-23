@@ -63,6 +63,7 @@ public class ProducerServiceTest {
         currencyConversion = CurrencyConversion
                 .builder()
                 .dataCotacao(currency.getDataCotacao())
+                .dataHoraSolicitacao(LocalDateTime.now())
                 .valorDesejado(currency.getValorDesejado())
                 .moedaFinal(currency.getMoedaDestino().name())
                 .moedaOrigem(currency.getMoedaOrigem().name())
@@ -135,7 +136,7 @@ public class ProducerServiceTest {
     public void testRenewCache() {
         currencyConversion.setId(1L);
         currencyConversion.setValorConvertido(1D);
-        currencyConversion.setDataHoraConversao(LocalDateTime.now().minusMinutes(30));
+        currencyConversion.setDataHoraConversao(LocalDateTime.now().minusMinutes(2));
         Mockito.when(
                 currencyConversionRepository
                         .findFirstByDataCotacaoAndMoedaOrigemAndMoedaFinalAndValorDesejadoOrderByIdDesc(

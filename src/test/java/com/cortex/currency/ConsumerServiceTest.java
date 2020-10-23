@@ -11,7 +11,6 @@ import com.cortex.currency.exception.BancoCentralException;
 import com.cortex.currency.model.CurrencyConversionRepository;
 import com.cortex.currency.service.impl.ConsumerServiceImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,6 +22,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
@@ -55,11 +55,6 @@ public class ConsumerServiceTest {
 
     private static String queryStringOrigem;
     private static String queryStringDestino;
-
-    @BeforeAll
-    static void setup() {
-        createDTOS();
-    }
 
     @BeforeEach
     void reset() {
@@ -159,7 +154,8 @@ public class ConsumerServiceTest {
         consumerService.processar(requestDTO);
 
         Assertions.assertEquals(Status.ERRO_BANCO_CENTRAL, currencyConversion.getStatus());
-        Assertions.assertNotNull(currencyConversion.getDataHoraConversao());
+        Assertions.assertNotNull(currencyConversion.getDataHoraSolicitacao());
+        Assertions.assertNull(currencyConversion.getDataHoraConversao());
         Assertions.assertNull(currencyConversion.getValorConvertido());
         Assertions.assertEquals(cotacaoPTAXDTOOrigem.getMoeda().name(), currencyConversion.getMoedaOrigem());
         Assertions.assertEquals(cotacaoPTAXDTODestino.getMoeda().name(), currencyConversion.getMoedaFinal());
@@ -182,7 +178,8 @@ public class ConsumerServiceTest {
         consumerService.processar(requestDTO);
 
         Assertions.assertEquals(Status.ERRO_BANCO_CENTRAL_EMPTY, currencyConversion.getStatus());
-        Assertions.assertNotNull(currencyConversion.getDataHoraConversao());
+        Assertions.assertNotNull(currencyConversion.getDataHoraSolicitacao());
+        Assertions.assertNull(currencyConversion.getDataHoraConversao());
         Assertions.assertNull(currencyConversion.getValorConvertido());
         Assertions.assertEquals(cotacaoPTAXDTOOrigem.getMoeda().name(), currencyConversion.getMoedaOrigem());
         Assertions.assertEquals(cotacaoPTAXDTODestino.getMoeda().name(), currencyConversion.getMoedaFinal());
@@ -206,6 +203,7 @@ public class ConsumerServiceTest {
         currencyConversion = CurrencyConversion
                 .builder()
                 .dataCotacao(currency.getDataCotacao())
+                .dataHoraSolicitacao(LocalDateTime.now())
                 .valorDesejado(currency.getValorDesejado())
                 .moedaFinal(currency.getMoedaDestino().name())
                 .moedaOrigem(currency.getMoedaOrigem().name())

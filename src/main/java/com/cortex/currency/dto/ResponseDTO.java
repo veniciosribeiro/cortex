@@ -31,6 +31,10 @@ public class ResponseDTO extends BaseRequestDTO {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dataHoraConversao;
 
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime dataHoraSolicitacao;
+
     public void setStatusDescription(Status status) {
         this.statusDescription = status.getStatus();
     }

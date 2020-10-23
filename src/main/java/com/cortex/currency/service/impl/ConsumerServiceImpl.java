@@ -99,11 +99,11 @@ public class ConsumerServiceImpl implements ConsumerService {
             );
 
             currencyConversion.setStatus(Status.CONVERTIDO);
+            currencyConversion.setDataHoraConversao(LocalDateTime.now());
             currencyConversion.setValorConvertido(valorConvertido * requestDTO.getCurrency().getValorDesejado());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            currencyConversion.setDataHoraConversao(LocalDateTime.now());
             currencyConversionRepository.save(currencyConversion);
         }
     }

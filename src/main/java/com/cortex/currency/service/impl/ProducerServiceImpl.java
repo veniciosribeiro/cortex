@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -55,6 +56,7 @@ public class ProducerServiceImpl implements ProducerService {
             currencyConversion = CurrencyConversion
                     .builder()
                     .dataCotacao(currencyDTO.getDataCotacao())
+                    .dataHoraSolicitacao(LocalDateTime.now())
                     .valorDesejado(currencyDTO.getValorDesejado())
                     .moedaFinal(currencyDTO.getMoedaDestino().name())
                     .moedaOrigem(currencyDTO.getMoedaOrigem().name())
@@ -74,6 +76,7 @@ public class ProducerServiceImpl implements ProducerService {
                 .status(currencyConversion.getStatus())
                 .statusDescription(currencyConversion.getStatus().getStatus())
                 .dataHoraConversao(currencyConversion.getDataHoraConversao())
+                .dataHoraSolicitacao(currencyConversion.getDataHoraSolicitacao())
                 .currency(currencyDTO)
                 .build();
     }
@@ -90,27 +93,20 @@ public class ProducerServiceImpl implements ProducerService {
         if (Objects.nonNull(currencyConversion)) {
             log.info("Resultado retornado do cache");
 
-            if (Objects.nonNull(currencyConversion.getValorConvertido())) {
-                log.info("Conversão da moeda {} para a moeda {} - Valor: {}",
-                        currencyConversion.getMoedaOrigem(),
-                        currencyConversion.getMoedaFinal(),
-                        currencyConversion.getValorConvertido()
-                );
-            }
+            log.info("Conversão da moeda {} para a moeda {} - Valor: {}",
+                    currencyConversion.getMoedaOrigem(),
+                    currencyConversion.getMoedaFinal(),
+                    currencyConversion.getValorConvertido()
+            );
 
-            if (Objects.nonNull(currencyConversion.getDataHoraConversao())) {
-                LocalDateTime dataHoraConversao = currencyConversion.getDataHoraConversao();
-                LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime dataHoraConversao = Optional.ofNullable(currencyConversion.getDataHoraConversao())
+                    .orElseGet(currencyConversion::getDataHoraSolicitacao);
 
-                LocalDateTime tempDateTime = LocalDateTime.from(dataHoraConversao);
+            long elapsedTime = dataHoraConversao.until(LocalDateTime.now(), ChronoUnit.SECONDS);
 
-                long elapsedTime = tempDateTime.until(currentTime, ChronoUnit.SECONDS);
+            log.info("Segundos para renovar o cache: {}", (cacheTime * 60) - elapsedTime);
 
-                log.info("Segundos para renovar o cache: {}", (cacheTime * 60) - elapsedTime);
-
-                return elapsedTime <= (cacheTime * 60);
-            }
-            return true;
+            return elapsedTime <= (cacheTime * 60);
         }
         return false;
     }

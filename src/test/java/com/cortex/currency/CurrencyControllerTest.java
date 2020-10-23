@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @WebMvcTest(CurrencyController.class)
@@ -48,18 +49,18 @@ public class CurrencyControllerTest {
     @Mock
     private QueueServiceImpl queueService;
 
-    private static CurrencyConversion currencyConversion;
+    private CurrencyConversion currencyConversion;
 
-    private static RequestDTO requestDTO;
+    private RequestDTO requestDTO;
 
-    private static CurrencyDTO currency;
+    private CurrencyDTO currency;
 
-    private static ObjectMapper OBJECT_MAPPER;
+    private ObjectMapper OBJECT_MAPPER;
 
-    private static String urlRequest;
+    private String urlRequest;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void reset() {
         OBJECT_MAPPER = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         currency = CurrencyDTO
@@ -79,6 +80,7 @@ public class CurrencyControllerTest {
         currencyConversion = CurrencyConversion
                 .builder()
                 .dataCotacao(currency.getDataCotacao())
+                .dataHoraSolicitacao(LocalDateTime.now())
                 .valorDesejado(currency.getValorDesejado())
                 .moedaFinal(currency.getMoedaDestino().name())
                 .moedaOrigem(currency.getMoedaOrigem().name())
@@ -136,9 +138,33 @@ public class CurrencyControllerTest {
     }
 
     @Test
+    void solicitarConversaoInvalidCacheTimeTest() throws Exception {
+        currencyConversion.setId(1L);
+        currencyConversion.setDataHoraConversao(LocalDateTime.now().minusMinutes(2));
+        Mockito.when(
+                currencyConversionRepository
+                        .findFirstByDataCotacaoAndMoedaOrigemAndMoedaFinalAndValorDesejadoOrderByIdDesc(
+                                currency.getDataCotacao(), currency.getMoedaOrigem().name(),
+                                currency.getMoedaDestino().name(), currency.getValorDesejado()
+                        )
+        ).thenReturn(currencyConversion);
+
+        Mockito.doNothing().when(rabbitTemplate).convertAndSend(Mockito.any(), Mockito.any(), Mockito.anyString());
+        Mockito.doNothing().when(queueService).send(requestDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.get(urlRequest)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> {
+                    Assertions.assertEquals(200, result.getResponse().getStatus());
+                    boolean cachedResult = JsonPath.read(result.getResponse().getContentAsString(), "$.cachedResult");
+                    Assertions.assertFalse(cachedResult);
+                });
+    }
+
+    @Test
     void erroAoAdicionarNoBancoTest() throws Exception {
         currencyConversion.setId(null);
-        Mockito.when(currencyConversionRepository.save(currencyConversion)).thenThrow(new IllegalArgumentException("Erro ao adicionar no banco"));
+        Mockito.when(currencyConversionRepository.save(Mockito.any(CurrencyConversion.class))).thenThrow(new IllegalArgumentException("Erro ao adicionar no banco"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(urlRequest)
                 .contentType(MediaType.APPLICATION_JSON))
