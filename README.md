@@ -1,7 +1,14 @@
 # Currency conversion for Cortex Case ![codecov](https://codecov.io/gh/veniciosribeiro/cortex/branch/master/graph/badge.svg?token=LZZ9NLTVUX)
-Esta aplicação pode ser acessada no Heroku através do link de exemplo abaixo:
+
+#### Demo
+Esta aplicação está em execução no Heroku e pode ser acessada no link abaixo:
 
 [https://cortex-backend-conversion-api.herokuapp.com/converte/USD/BRL/1/20-10-2020](https://cortex-backend-conversion-api.herokuapp.com/converte/USD/BRL/1/20-10-2020)
+
+#### Swagger
+O Swagger pode ser acessado no endereço abaixo ou acessando o caminho `/swagger-ui.html` em outro ambiente configurado.
+
+https://cortex-backend-conversion-api.herokuapp.com/swagger-ui.html
 
 ## Execução da aplicação
 
@@ -92,11 +99,6 @@ $ docker stop cortex-currency-conversion
 * Franco suíço (CHF) Tipo A
 * Iene (JPY) Tipo A
 * Libra esterlina (GBP) Tipo B
-
-#### Swagger
-O Swagger pode ser acessado no endereço abaixo ou acessando o caminho `/swagger-ui.html` em outro ambiente configurado.
-
-- https://cortex-backend-conversion-api.herokuapp.com/swagger-ui.html
 
 ## 
 #### Diagrama Producer:
